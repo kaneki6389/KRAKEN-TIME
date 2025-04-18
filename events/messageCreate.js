@@ -1,27 +1,32 @@
-const { prefix } = require("../config.json");
 const fs = require("fs");
+const prefix = require("../config.json").prefix;
 
 module.exports = {
   name: "messageCreate",
   async execute(message, client) {
-    console.log("Message reçu:", message.content); // Ajouter un log pour vérifier les messages
-
     if (message.author.bot || !message.content.startsWith(prefix)) return;
 
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
 
-    console.log("Commande reçue:", commandName); // Ajouter un log pour voir la commande
-
     const folders = ["moderation", "music"];
+    let commandFound = false;
+    
     for (const folder of folders) {
       const commandPath = `./commands/${folder}/${commandName}.js`;
+      console.log(`Vérification du chemin: ${commandPath}`); // Log pour déboguer
+
       if (fs.existsSync(commandPath)) {
+        console.log(`Commande trouvée: ${commandPath}`); // Log pour déboguer
         const command = require(commandPath);
-        return command.execute(message, args, client);
+        await command.execute(message, args, client);
+        commandFound = true;
+        break;
       }
     }
 
-    message.reply("Commande inconnue.");
+    if (!commandFound) {
+      message.reply("Commande inconnue.");
+    }
   }
 };
