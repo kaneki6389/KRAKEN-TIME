@@ -1,0 +1,19 @@
+{
+  "name": "botdiscord",
+  "version": "1.0.0",
+  "description": "Bot modulaire avec commandes de modération et musique (YouTube).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@discordjs/voice": "^0.18.0",
+    "discord-player": "^7.1.0",
+    "discord.js": "^14.18.0",
+    "dotenv": "^16.5.0"
+  }
+}
